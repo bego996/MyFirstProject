@@ -4,13 +4,12 @@ import java.awt.*;
 import java.util.Random;
 
 public class Appel{
-    private final String appelSymbol = "\uF000";
     private int appelCounter = 1;
     private Point appelLocation;
 
     Appel(){
         Random r = new Random();
-        this.appelLocation = new Point(r.nextInt(0,5),r.nextInt(0,5));
+        this.appelLocation = new Point(r.nextInt(0,400),r.nextInt(0,400));
     }
 
 
@@ -50,6 +49,6 @@ public class Appel{
     }
 
     public String getAppelSymbol() {
-        return appelSymbol;
+        return "\uD83C\uDF4E";
     }
 }

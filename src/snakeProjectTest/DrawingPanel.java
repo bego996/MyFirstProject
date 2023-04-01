@@ -8,6 +8,7 @@ import static java.awt.event.KeyEvent.*;
 
 public class DrawingPanel extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
     SnakeMother head ;
+    Appel actualAppelLocation = new Appel();
     private boolean stopSnake = false;
     private boolean kolisionDetect = false;
     private boolean movesDown = false;
