@@ -23,10 +23,10 @@ public class Appel{
 
     public boolean appelLocationInConfliftWithSnake(Point[] tryLocation,int widht,int height){
         for (int i = 0, j = 0; i < tryLocation.length ; i++) {
-            if ((!tryLocation[i].equals(this.appelLocation) && j < tryLocation.length) && ((appelLocation.x >= 30 && this.appelLocation.x <= widht-30) && (this.appelLocation.y >= 30 && this.appelLocation.y <= height-30) )) {
+            if ((!tryLocation[i].equals(appelLocation) && j < tryLocation.length) && ((appelLocation.x >= 30 && appelLocation.x <= widht-30) && (appelLocation.y >= 30 && appelLocation.y <= height-30) )) {
                 j++;
             }
-            else if (tryLocation[i].equals(this.appelLocation)) {
+            else if (tryLocation[i].equals(appelLocation)) {
                 this.appelLocation = new Point(new Appel().appelLocation);
                 appelLocationInConfliftWithSnake(tryLocation,widht,height);
             }
