@@ -9,6 +9,7 @@ import static java.awt.event.KeyEvent.*;
 public class DrawingPanel extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
     SnakeMother head ;
     Appel actualAppelLocation = new Appel();
+    int maxAppels = 10;
     private boolean stopSnake = false;
     private boolean kolisionDetect = false;
     private boolean movesDown = false;
@@ -35,13 +36,14 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
     protected void paintComponent(Graphics g) {
 
         startEndWidth[0] = 0;startEndWidth[1] = getWidth();
-        startEndHeight[0]=0;startEndHeight[1]= getHeight();
+        startEndHeight[0]= 0;startEndHeight[1]= getHeight();
         int width = getWidth();
         int height = getHeight();
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
         g.setColor(Color.blue);
         g2d.setStroke(new BasicStroke(2));
+        g2d.setFont(new Font("",Font.PLAIN,10));
 
         if (parts == null) {
             head = new SnakeMother(new Point(width / 2, height / 2),new Point(width / 2 + 1, height / 2));
@@ -56,6 +58,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
             for (int i = 0; i < parts.length - 1; i++) {
                 g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
             }
+            g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
         }
 
 
@@ -71,6 +74,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
                 parts = SnakeMother.compileSnakeParts(head, parts);
                 for (int i = 0; i < parts.length - 1; i++)
                     g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
+                g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesDown) {
                 head.setBodyStart(new Point(head.getBodyStart().x, head.getBodyStart().y+1));
@@ -78,6 +82,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
                 parts = SnakeMother.compileSnakeParts(head, parts);
                 for (int i = 0; i < parts.length - 1; i++)
                     g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
+                g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesLeft) {
                 head.setBodyStart(new Point(head.getBodyStart().x - 1, head.getBodyStart().y));
@@ -85,6 +90,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
                 parts = SnakeMother.compileSnakeParts(head, parts);
                 for (int i = 0; i < parts.length - 1; i++)
                     g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
+                g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesUp) {
                 head.setBodyStart(new Point(head.getBodyStart().x, head.getBodyStart().y - 1));
@@ -93,6 +99,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
                 for (int i = 0; i < parts.length - 1; i++) {
                     g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
                 }
+                g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
                 repaint();
             }
         }else if (HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) || HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY) ){
@@ -113,6 +120,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
             parts = null;
         }
     }
+
 
     @Override
     public void keyTyped(KeyEvent e) {
