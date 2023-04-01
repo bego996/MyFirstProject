@@ -41,7 +41,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
         int height = getHeight();
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
-        g.setColor(Color.blue);
+        g.setColor(Color.red);
         g2d.setStroke(new BasicStroke(2));
         g2d.setFont(new Font("",Font.PLAIN,10));
 
@@ -54,7 +54,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
 
 
 
-        if ((!movesUp && !movesLeft && !movesRight && !movesDown) || !stopSnake ) {
+        if ((!movesUp && !movesLeft && !movesRight && !movesDown) || !stopSnake || !actualAppelLocation.appelLocationInConfliftWithSnake(parts,width,height) ) {
             for (int i = 0; i < parts.length - 1; i++) {
                 g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
             }
@@ -120,7 +120,6 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
             parts = null;
         }
     }
-
 
     @Override
     public void keyTyped(KeyEvent e) {
