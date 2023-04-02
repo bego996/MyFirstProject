@@ -12,15 +12,6 @@ public class Appel{
         this.appelLocation = new Point(r.nextInt(0,200),r.nextInt(0,200));
     }
 
-
-
-
-
-
-
-
-
-
     public boolean appelLocationInConfliftWithSnake(Point[] tryLocation,int widht,int height){
         for (int i = 0, j = 0; i < tryLocation.length ; i++) {
             if ((!tryLocation[i].equals(appelLocation) && j < tryLocation.length) && ((appelLocation.x >= 10 && appelLocation.x <= widht-10) && (appelLocation.y >= 10 && appelLocation.y <= height-10) )) {
@@ -34,6 +25,9 @@ public class Appel{
         }
         return false;
     }
+    public boolean appelInConflictWitSnakeHead(SnakeMother head){
+        return head.getBodyEnd() == this.appelLocation;
+    }
     public Point getAppelLocation() {
         return appelLocation;
     }
@@ -41,6 +35,7 @@ public class Appel{
     public void setAppelLocation(Point appelLocation) {
         this.appelLocation = appelLocation;
     }
+
     public int getAppelCounter() {
         return appelCounter;
     }

@@ -6,10 +6,10 @@ import java.awt.event.*;
 
 import static java.awt.event.KeyEvent.*;
 
-public class DrawingPanel extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
+public class DrawingPanel extends JPanel implements KeyListener{
     SnakeMother head ;
     Appel actualAppelLocation = new Appel();
-    int maxAppels = 10;
+    private final int maxAppels = 10;
     private boolean stopSnake = false;
     private boolean kolisionDetect = false;
     private boolean movesDown = false;
@@ -25,8 +25,6 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
 
     DrawingPanel() {
         setBackground(Color.green);
-        addMouseListener(this);
-        addMouseMotionListener(this);
         addKeyListener(this);
         setPreferredSize(new Dimension(200,200));
 
@@ -62,7 +60,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
         }
 
 
-        if (stopSnake && !HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) &&  !kolisionDetect && !HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY)) {
+        if (stopSnake && !HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) &&  !kolisionDetect && !HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY) && !actualAppelLocation.appelInConflictWitSnakeHead(head)) {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
@@ -105,7 +103,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
                 repaint();
             }
-        }else if (HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) || HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY) ){
+        }else if (HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) || HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY) || actualAppelLocation.appelInConflictWitSnakeHead(head)){
             //JOptionPane.showMessageDialog(null, "Grenze erreicht!");
             g.setColor(Color.red);
             g2d.fillRect(0,0,width,height);
@@ -158,40 +156,6 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
 
     @Override
     public void keyReleased(KeyEvent e) {
-
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
 
     }
 }
