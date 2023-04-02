@@ -4,36 +4,32 @@ import java.awt.*;
 import java.util.Random;
 
 public class Appel{
-    private int appelCounter = 1;
-    private Point appelLocation;
+    int appelCounter = 1;
+    Point appelLocation;
 
     Appel(){
         Random r = new Random();
-        this.appelLocation = new Point(r.nextInt(0,200),r.nextInt(0,200));
+        appelLocation = new Point(r.nextInt(0,200),r.nextInt(0,200));
     }
 
-    public boolean appelLocationInConfliftWithSnake(Point[] tryLocation,int widht,int height){
+    public void asignNewAppleLocation(Point[] tryLocation, int widht, int height){
         for (int i = 0, j = 0; i < tryLocation.length ; i++) {
             if ((!tryLocation[i].equals(appelLocation) && j < tryLocation.length) && ((appelLocation.x >= 10 && appelLocation.x <= widht-10) && (appelLocation.y >= 10 && appelLocation.y <= height-10) )) {
                 j++;
             }
             else{
-                this.appelLocation = new Point(new Appel().appelLocation);
+                appelLocation = new Point(new Appel().appelLocation);
                 i = 0;
                 j = 0;
             }
         }
-        return false;
     }
+
     public boolean appelInConflictWitSnakeHead(SnakeMother head){
-        return head.getBodyEnd() == this.appelLocation;
+        return head.getBodyEnd().equals(appelLocation);
     }
     public Point getAppelLocation() {
         return appelLocation;
-    }
-
-    public void setAppelLocation(Point appelLocation) {
-        this.appelLocation = appelLocation;
     }
 
     public int getAppelCounter() {

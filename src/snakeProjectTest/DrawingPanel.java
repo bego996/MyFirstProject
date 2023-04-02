@@ -9,7 +9,7 @@ import static java.awt.event.KeyEvent.*;
 public class DrawingPanel extends JPanel implements KeyListener{
     SnakeMother head ;
     Appel actualAppelLocation = new Appel();
-    private final int maxAppels = 10;
+    private int startBodyParts = 30;
     private boolean stopSnake = false;
     private boolean kolisionDetect = false;
     private boolean movesDown = false;
@@ -24,10 +24,9 @@ public class DrawingPanel extends JPanel implements KeyListener{
     private Point[] parts;
 
     DrawingPanel() {
-        setBackground(Color.green);
+        setBackground(Color.gray);
         addKeyListener(this);
         setPreferredSize(new Dimension(200,200));
-
     }
 
     @Override
@@ -45,14 +44,15 @@ public class DrawingPanel extends JPanel implements KeyListener{
 
         if (parts == null) {
             head = new SnakeMother(new Point(width / 2, height / 2),new Point(width / 2 + 1, height / 2));
-            parts = SnakeMother.compileSnakeParts(head, 30, 1);
+            parts = SnakeMother.compileSnakeParts(head, startBodyParts, 1);
+            actualAppelLocation.asignNewAppleLocation(parts,width,height);
         }
         possibleColissionPartsX = SnakeMother.convertSnakePartsToPossibleCollisionPartsX(parts);
         possibleCollisionPartsY = SnakeMother.convertSnakePartsToPossibleCollisionPartsY(parts);
 
 
 
-        if (((!movesUp && !movesLeft && !movesRight && !movesDown) && !actualAppelLocation.appelLocationInConfliftWithSnake(parts,width,height)) || !stopSnake ) {
+        if (((!movesUp && !movesLeft && !movesRight && !movesDown) && !actualAppelLocation.appelInConflictWitSnakeHead(head)) || !stopSnake ) {
             for (int i = 0; i < parts.length - 1; i++) {
                 g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
             }
@@ -103,22 +103,47 @@ public class DrawingPanel extends JPanel implements KeyListener{
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
                 repaint();
             }
-        }else if (HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) || HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY) || actualAppelLocation.appelInConflictWitSnakeHead(head)){
+        }
+        else{
+            int maxAppels = 10;
+            if (actualAppelLocation.appelInConflictWitSnakeHead(head) && actualAppelLocation.getAppelCounter() <= maxAppels) {
+                actualAppelLocation = new Appel();
+                actualAppelLocation.setAppelCounter(actualAppelLocation.getAppelCounter() + 1);
+                startBodyParts += 5;
+                parts = null;
+            } else if (actualAppelLocation.getAppelCounter() == maxAppels) {
+                g.setColor(Color.red);
+                g2d.fillRect(0,0,width,height);
+                g.setColor(Color.green);
+                String gr = "Gratulation Gewonnen!:) Drücke r für Neustart";
+                g2d.setFont(new Font("",Font.PLAIN,20));
+                g2d.drawString(gr,width/2,height/2);
+                actualAppelLocation.setAppelCounter(1);
+                kolisionDetect = !kolisionDetect;
+                headKolisionDetect = !headKolisionDetect;
+                stopSnake = !stopSnake;
+                movesDown = false;
+                movesRight = false;
+                movesLeft = false;
+                movesUp = false;
+                parts = null;
+            }else if (HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) || HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY)){
+                g.setColor(Color.red);
+                g2d.fillRect(0,0,width,height);
+                g.setColor(Color.green);
+                String gr = "Verloren:( Drücke R für Neustart";
+                g2d.setFont(new Font("",Font.PLAIN,20));
+                g2d.drawString(gr,width/2,height/2);
+                kolisionDetect = !kolisionDetect;
+                headKolisionDetect = !headKolisionDetect;
+                stopSnake = !stopSnake;
+                movesDown = false;
+                movesRight = false;
+                movesLeft = false;
+                movesUp = false;
+                parts = null;
+            }
             //JOptionPane.showMessageDialog(null, "Grenze erreicht!");
-            g.setColor(Color.red);
-            g2d.fillRect(0,0,width,height);
-            g.setColor(Color.green);
-            String gr = "Verloren :(";
-            g2d.setFont(new Font("",Font.PLAIN,20));
-            g2d.drawString(gr,width/2,height/2);
-            kolisionDetect = !kolisionDetect;
-            headKolisionDetect = !headKolisionDetect;
-            stopSnake = !stopSnake;
-            movesDown = false;
-            movesRight = false;
-            movesLeft = false;
-            movesUp = false;
-            parts = null;
         }
     }
 
