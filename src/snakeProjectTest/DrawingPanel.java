@@ -106,9 +106,9 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
                 repaint();
             }
         }else if (HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) || HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY) ){
-            JOptionPane.showMessageDialog(null, "Grenze erreicht!");
+            //JOptionPane.showMessageDialog(null, "Grenze erreicht!");
             g.setColor(Color.red);
-            g.fillRect(0,0,width,height);
+            g2d.fillRect(0,0,width,height);
             g.setColor(Color.green);
             String gr = "Verloren :(";
             g2d.setFont(new Font("",Font.PLAIN,20));
