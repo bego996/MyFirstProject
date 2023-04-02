@@ -9,6 +9,7 @@ import static java.awt.event.KeyEvent.*;
 public class DrawingPanel extends JPanel implements KeyListener{
     SnakeMother head ;
     Appel actualAppelLocation = new Appel();
+    Appel testAppel = new Appel(new Point(150,100));
     private int startBodyParts = 30;
     private boolean stopSnake = false;
     private boolean kolisionDetect = false;
@@ -52,15 +53,16 @@ public class DrawingPanel extends JPanel implements KeyListener{
 
 
 
-        if (((!movesUp && !movesLeft && !movesRight && !movesDown) && !actualAppelLocation.appelInConflictWitSnakeHead(head)) || !stopSnake ) {
+        if (((!movesUp && !movesLeft && !movesRight && !movesDown) || !stopSnake )) {
             for (int i = 0; i < parts.length - 1; i++) {
                 g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
             }
             g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
+            g2d.drawString(testAppel.getAppelSymbol(),testAppel.getAppelLocation().x,testAppel.getAppelLocation().y);
         }
 
 
-        if (stopSnake && !HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) &&  !kolisionDetect && !HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY) && !actualAppelLocation.appelInConflictWitSnakeHead(head)) {
+        if (stopSnake && !HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) &&  !kolisionDetect && !HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY) && !actualAppelLocation.appelInConflictWitSnakeHead(head) && !testAppel.appelInConflictWitSnakeHead(head)) {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
@@ -74,6 +76,7 @@ public class DrawingPanel extends JPanel implements KeyListener{
                     g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
                 }
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
+                g2d.drawString(testAppel.getAppelSymbol(),testAppel.getAppelLocation().x,testAppel.getAppelLocation().y);
                 repaint();
             } else if (movesDown) {
                 head.setBodyStart(new Point(head.getBodyStart().x, head.getBodyStart().y+1));
@@ -83,6 +86,7 @@ public class DrawingPanel extends JPanel implements KeyListener{
                     g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
                 }
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
+                g2d.drawString(testAppel.getAppelSymbol(),testAppel.getAppelLocation().x,testAppel.getAppelLocation().y);
                 repaint();
             } else if (movesLeft) {
                 head.setBodyStart(new Point(head.getBodyStart().x - 1, head.getBodyStart().y));
@@ -92,6 +96,7 @@ public class DrawingPanel extends JPanel implements KeyListener{
                     g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
                 }
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
+                g2d.drawString(testAppel.getAppelSymbol(),testAppel.getAppelLocation().x,testAppel.getAppelLocation().y);
                 repaint();
             } else if (movesUp) {
                 head.setBodyStart(new Point(head.getBodyStart().x, head.getBodyStart().y - 1));
@@ -101,16 +106,17 @@ public class DrawingPanel extends JPanel implements KeyListener{
                     g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
                 }
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
+                g2d.drawString(testAppel.getAppelSymbol(),testAppel.getAppelLocation().x,testAppel.getAppelLocation().y);
                 repaint();
             }
         }
         else{
             int maxAppels = 10;
-            if (actualAppelLocation.appelInConflictWitSnakeHead(head) && actualAppelLocation.getAppelCounter() <= maxAppels) {
+            if (actualAppelLocation.appelInConflictWitSnakeHead(head) || testAppel.appelInConflictWitSnakeHead(head)) {
                 actualAppelLocation = new Appel();
                 actualAppelLocation.setAppelCounter(actualAppelLocation.getAppelCounter() + 1);
                 startBodyParts += 5;
-                parts = null;
+                repaint();
             } else if (actualAppelLocation.getAppelCounter() == maxAppels) {
                 g.setColor(Color.red);
                 g2d.fillRect(0,0,width,height);
