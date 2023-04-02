@@ -28,7 +28,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
         addMouseListener(this);
         addMouseMotionListener(this);
         addKeyListener(this);
-        setPreferredSize(new Dimension(400,400));
+        setPreferredSize(new Dimension(200,200));
 
     }
 
@@ -54,7 +54,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
 
 
 
-        if ((!movesUp && !movesLeft && !movesRight && !movesDown) || !stopSnake || !actualAppelLocation.appelLocationInConfliftWithSnake(parts,width,height) ) {
+        if ((!movesUp && !movesLeft && !movesRight && !movesDown) && !stopSnake && !actualAppelLocation.appelLocationInConfliftWithSnake(parts,width,height) ) {
             for (int i = 0; i < parts.length - 1; i++) {
                 g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
             }

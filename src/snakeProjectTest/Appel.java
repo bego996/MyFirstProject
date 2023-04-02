@@ -9,7 +9,7 @@ public class Appel{
 
     Appel(){
         Random r = new Random();
-        this.appelLocation = new Point(r.nextInt(0,400),r.nextInt(0,400));
+        this.appelLocation = new Point(r.nextInt(0,200),r.nextInt(0,200));
     }
 
 
@@ -23,12 +23,13 @@ public class Appel{
 
     public boolean appelLocationInConfliftWithSnake(Point[] tryLocation,int widht,int height){
         for (int i = 0, j = 0; i < tryLocation.length ; i++) {
-            if ((!tryLocation[i].equals(appelLocation) && j < tryLocation.length) && ((appelLocation.x >= 30 && appelLocation.x <= widht-30) && (appelLocation.y >= 30 && appelLocation.y <= height-30) )) {
+            if ((!tryLocation[i].equals(appelLocation) && j < tryLocation.length) && ((appelLocation.x >= 10 && appelLocation.x <= widht-10) && (appelLocation.y >= 10 && appelLocation.y <= height-10) )) {
                 j++;
             }
-            else if (tryLocation[i].equals(appelLocation)) {
+            else{
                 this.appelLocation = new Point(new Appel().appelLocation);
-                appelLocationInConfliftWithSnake(tryLocation,widht,height);
+                i = 0;
+                j = 0;
             }
         }
         return false;
