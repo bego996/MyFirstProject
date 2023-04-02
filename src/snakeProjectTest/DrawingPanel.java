@@ -10,7 +10,7 @@ public class DrawingPanel extends JPanel implements KeyListener{
     SnakeMother head ;
     Appel actualAppelLocation = new Appel();
     Appel testAppel = new Appel(new Point(150,100));
-    private int startBodyParts = 30;
+    private int startBodyParts = 8;
     private boolean stopSnake = false;
     private boolean kolisionDetect = false;
     private boolean movesDown = false;
@@ -40,7 +40,7 @@ public class DrawingPanel extends JPanel implements KeyListener{
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
         g.setColor(Color.red);
-        g2d.setStroke(new BasicStroke(2));
+        g2d.setStroke(new BasicStroke(1));
         g2d.setFont(new Font("",Font.PLAIN,10));
 
         if (parts == null) {
@@ -64,7 +64,7 @@ public class DrawingPanel extends JPanel implements KeyListener{
 
         if (stopSnake && !HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) &&  !kolisionDetect && !HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY) && !actualAppelLocation.appelInConflictWitSnakeHead(head) && !testAppel.appelInConflictWitSnakeHead(head)) {
             try {
-                Thread.sleep(50);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -116,6 +116,8 @@ public class DrawingPanel extends JPanel implements KeyListener{
                 actualAppelLocation = new Appel();
                 actualAppelLocation.setAppelCounter(actualAppelLocation.getAppelCounter() + 1);
                 startBodyParts += 5;
+                testAppel = new Appel();
+                testAppel.setAppelCounter(testAppel.getAppelCounter() + 1);
                 repaint();
             } else if (actualAppelLocation.getAppelCounter() == maxAppels) {
                 g.setColor(Color.red);
@@ -138,7 +140,7 @@ public class DrawingPanel extends JPanel implements KeyListener{
                 g2d.fillRect(0,0,width,height);
                 g.setColor(Color.green);
                 String gr = "Verloren:( Drücke R für Neustart";
-                g2d.setFont(new Font("",Font.PLAIN,20));
+                g2d.setFont(new Font("",Font.PLAIN,10));
                 g2d.drawString(gr,width/2,height/2);
                 kolisionDetect = !kolisionDetect;
                 headKolisionDetect = !headKolisionDetect;
