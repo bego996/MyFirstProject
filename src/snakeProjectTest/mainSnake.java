@@ -5,7 +5,7 @@ import javax.swing.*;
 public class mainSnake {
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        frame.setSize(200,200);
+        frame.setSize(500,500);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         DrawingPanel pane = new DrawingPanel();
         pane.setFocusable(true);

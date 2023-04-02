@@ -9,7 +9,7 @@ import static java.awt.event.KeyEvent.*;
 public class DrawingPanel extends JPanel implements KeyListener{
     SnakeMother head ;
     Appel actualAppelLocation = new Appel();
-    Appel testAppel = new Appel(new Point(150,100));
+    Appel testAppel = new Appel(new Point(300,250));
     private int startBodyParts = 8;
     private boolean stopSnake = false;
     private boolean kolisionDetect = false;
@@ -27,7 +27,7 @@ public class DrawingPanel extends JPanel implements KeyListener{
     DrawingPanel() {
         setBackground(Color.gray);
         addKeyListener(this);
-        setPreferredSize(new Dimension(200,200));
+        setPreferredSize(new Dimension(500,500));
     }
 
     @Override
@@ -64,7 +64,7 @@ public class DrawingPanel extends JPanel implements KeyListener{
 
         if (stopSnake && !HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) &&  !kolisionDetect && !HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY) && !actualAppelLocation.appelInConflictWitSnakeHead(head) && !testAppel.appelInConflictWitSnakeHead(head)) {
             try {
-                Thread.sleep(200);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

@@ -9,7 +9,7 @@ public class Appel{
 
     Appel(){
         Random r = new Random();
-        appelLocation = new Point(r.nextInt(0,200),r.nextInt(0,200));
+        appelLocation = new Point(r.nextInt(0,500),r.nextInt(0,500));
     }
     Appel(Point test){
         this.appelLocation = test;
@@ -17,7 +17,7 @@ public class Appel{
 
     public void asignNewAppleLocation(Point[] tryLocation, int widht, int height){
         for (int i = 0, j = 0; i < tryLocation.length ; i++) {
-            if ((!tryLocation[i].equals(appelLocation) && j < tryLocation.length) && ((appelLocation.x >= 10 && appelLocation.x <= widht-10) && (appelLocation.y >= 10 && appelLocation.y <= height-10) )) {
+            if ((!tryLocation[i].equals(appelLocation) && j < tryLocation.length) && ((appelLocation.x >= 50 && appelLocation.x <= widht-50) && (appelLocation.y >= 50 && appelLocation.y <= height-50) )) {
                 j++;
             }
             else{
@@ -29,7 +29,7 @@ public class Appel{
     }
 
     public boolean appelInConflictWitSnakeHead(SnakeMother head){
-        return head.getBodyEnd().equals(appelLocation);
+        return (head.getBodyEnd().x >= appelLocation.x-3 && head.getBodyEnd().x <= appelLocation.x+7) && (head.getBodyEnd().y >= appelLocation.y-10 && head.getBodyEnd().y <= appelLocation.y) ;
     }
     public Point getAppelLocation() {
         return appelLocation;
