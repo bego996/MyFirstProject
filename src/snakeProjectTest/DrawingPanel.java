@@ -54,7 +54,7 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
 
 
 
-        if ((!movesUp && !movesLeft && !movesRight && !movesDown) && !stopSnake && !actualAppelLocation.appelLocationInConfliftWithSnake(parts,width,height) ) {
+        if (((!movesUp && !movesLeft && !movesRight && !movesDown) && !actualAppelLocation.appelLocationInConfliftWithSnake(parts,width,height)) || !stopSnake ) {
             for (int i = 0; i < parts.length - 1; i++) {
                 g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
             }
@@ -72,24 +72,27 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
                 head.setBodyStart(new Point(head.getBodyStart().x + 1, head.getBodyStart().y));
                 head.setBodyEnd(new Point(head.getBodyEnd().x + 1, head.getBodyEnd().y));
                 parts = SnakeMother.compileSnakeParts(head, parts);
-                for (int i = 0; i < parts.length - 1; i++)
+                for (int i = 0; i < parts.length - 1; i++) {
                     g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
+                }
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesDown) {
                 head.setBodyStart(new Point(head.getBodyStart().x, head.getBodyStart().y+1));
                 head.setBodyEnd(new Point(head.getBodyEnd().x, head.getBodyEnd().y+1));
                 parts = SnakeMother.compileSnakeParts(head, parts);
-                for (int i = 0; i < parts.length - 1; i++)
+                for (int i = 0; i < parts.length - 1; i++) {
                     g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
+                }
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesLeft) {
                 head.setBodyStart(new Point(head.getBodyStart().x - 1, head.getBodyStart().y));
                 head.setBodyEnd(new Point(head.getBodyEnd().x -1, head.getBodyEnd().y));
                 parts = SnakeMother.compileSnakeParts(head, parts);
-                for (int i = 0; i < parts.length - 1; i++)
+                for (int i = 0; i < parts.length - 1; i++) {
                     g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
+                }
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesUp) {
@@ -105,11 +108,11 @@ public class DrawingPanel extends JPanel implements MouseListener, MouseMotionLi
         }else if (HilfsMethoden.isHeadConflict(head,startEndHeight,startEndWidth) || HilfsMethoden.isHeadConflictXY(head,possibleColissionPartsX,possibleCollisionPartsY) ){
             JOptionPane.showMessageDialog(null, "Grenze erreicht!");
             g.setColor(Color.red);
-            g2d.fillRect(0,0,width,height);
+            g.fillRect(0,0,width,height);
             g.setColor(Color.green);
             String gr = "Verloren :(";
-            g2d.setFont(new Font("",Font.PLAIN,50));
-            g2d.drawString(gr,width/4,height/2);
+            g2d.setFont(new Font("",Font.PLAIN,20));
+            g2d.drawString(gr,width/2,height/2);
             kolisionDetect = !kolisionDetect;
             headKolisionDetect = !headKolisionDetect;
             stopSnake = !stopSnake;
