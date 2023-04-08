@@ -11,9 +11,6 @@ public class Appel{
         Random r = new Random();
         appelLocation = new Point(r.nextInt(0,500),r.nextInt(0,500));
     }
-    Appel(Point test){
-        this.appelLocation = test;
-    }
 
     public void asignNewAppleLocation(Point[] tryLocation, int widht, int height){
         for (int i = 0, j = 0; i < tryLocation.length ; i++) {
