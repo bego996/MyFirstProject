@@ -34,7 +34,7 @@ public class DrawingPanel extends JPanel implements KeyListener{
     DrawingPanel() {
         setBackground(Color.green);
         addKeyListener(this);
-        setPreferredSize(new Dimension(200,200));
+        setPreferredSize(new Dimension(500,500));
     }
 
     @Override
