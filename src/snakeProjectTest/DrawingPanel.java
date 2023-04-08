@@ -3,6 +3,9 @@ package snakeProjectTest;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiFunction;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -11,6 +14,7 @@ public class DrawingPanel extends JPanel implements KeyListener{
     Appel actualAppelLocation = new Appel();
     Appel secondAppelLocation = new Appel();
     private int startBodyParts = 200;
+    private int followingBodyPartsAfterApple;
     private boolean stopSnake = false;
     private boolean kolisionDetect = false;
     private boolean movesDown = false;
@@ -18,12 +22,15 @@ public class DrawingPanel extends JPanel implements KeyListener{
     private boolean movesRight = false;
     private boolean movesLeft = false;
     private boolean headKolisionDetect = false;
+    boolean appleConsumed = false;
     int maxAppels = 5;
     int[] possibleColissionPartsX;
     int[] possibleCollisionPartsY;
     private final int[] startEndWidth = new int[2];
     private final int[] startEndHeight = new int[2];
     private Point[] parts;
+    Point[] partsAfterAppleComsome;
+    List<Point> bothstacked = new ArrayList<>();
 
     DrawingPanel() {
         setBackground(Color.green);
@@ -49,6 +56,12 @@ public class DrawingPanel extends JPanel implements KeyListener{
             head = new SnakeMother(new Point(width / 2, height / 2),new Point(width / 2 + 1, height / 2));
             parts = SnakeMother.compileSnakeParts(head, startBodyParts, 1);
             actualAppelLocation.asignNewAppleLocation(parts,width,height);
+        } else if (appleConsumed) {
+            partsAfterAppleComsome = SnakeMother.compileSnakeParts(new SnakeMother(parts[parts.length-2],parts[parts.length-1]), followingBodyPartsAfterApple, 1);
+            bothstacked.addAll(List.of(parts));
+            bothstacked.addAll(2, List.of(partsAfterAppleComsome));
+            parts = bothstacked.toArray(new Point[0]);
+            appleConsumed = false;
         }
         possibleColissionPartsX = SnakeMother.convertSnakePartsToPossibleCollisionPartsX(parts);
         possibleCollisionPartsY = SnakeMother.convertSnakePartsToPossibleCollisionPartsY(parts);
@@ -113,10 +126,11 @@ public class DrawingPanel extends JPanel implements KeyListener{
             }
         }
         else{
-            if ((actualAppelLocation.appelInConflictWitSnakeHead(head) || secondAppelLocation.appelInConflictWitSnakeHead(head)) && actualAppelLocation.getAppelCounter() <= maxAppels ) {
-                actualAppelLocation = new Appel();
+            if ((actualAppelLocation.appelInConflictWitSnakeHead(head) || secondAppelLocation.appelInConflictWitSnakeHead(head)) && actualAppelLocation.getAppelCounter() < maxAppels && !appleConsumed  ) {
+                actualAppelLocation.appelLocation = new Appel().appelLocation;
                 actualAppelLocation.setAppelCounter(actualAppelLocation.getAppelCounter() + 1);
-                startBodyParts += 20;
+                followingBodyPartsAfterApple += 50;
+                appleConsumed = !appleConsumed;
                 //secondAppelLocation = new Appel();
                 //secondAppelLocation.setAppelCounter(secondAppelLocation.getAppelCounter() + 1);
                 repaint();

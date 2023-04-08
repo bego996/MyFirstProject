@@ -1,6 +1,8 @@
 package snakeProjectTest;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SnakeMother {
     private Point bodyStart;
