@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -35,13 +34,13 @@ public class DrawingPanel extends JPanel implements KeyListener{
     DrawingPanel() {
         setBackground(Color.green);
         addKeyListener(this);
-        setPreferredSize(new Dimension(500,500));
+        setPreferredSize(new Dimension(200,200));
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        startEndWidth[0] = 0;
-        startEndWidth[1] = getWidth();
+        startEndWidth[0]= 0;
+        startEndWidth[1]= getWidth();
         startEndHeight[0]= 0;
         startEndHeight[1]= getHeight();
         int width = getWidth();
@@ -59,9 +58,10 @@ public class DrawingPanel extends JPanel implements KeyListener{
         } else if (appleConsumed) {
             partsAfterAppleComsome = SnakeMother.compileSnakeParts(new SnakeMother(parts[parts.length-2],parts[parts.length-1]), followingBodyPartsAfterApple, 1);
             bothstacked.addAll(List.of(parts));
-            bothstacked.addAll(2, List.of(partsAfterAppleComsome));
+            bothstacked.addAll(List.of(partsAfterAppleComsome));
             parts = bothstacked.toArray(new Point[0]);
             appleConsumed = false;
+            bothstacked = new ArrayList<>();
         }
         possibleColissionPartsX = SnakeMother.convertSnakePartsToPossibleCollisionPartsX(parts);
         possibleCollisionPartsY = SnakeMother.convertSnakePartsToPossibleCollisionPartsY(parts);
@@ -73,7 +73,6 @@ public class DrawingPanel extends JPanel implements KeyListener{
                 g.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
             }
             g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
-            //g2d.drawString(secondAppelLocation.getAppelSymbol(), secondAppelLocation.getAppelLocation().x, secondAppelLocation.getAppelLocation().y);
         }
 
 
@@ -91,7 +90,6 @@ public class DrawingPanel extends JPanel implements KeyListener{
                     g2d.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
                 }
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
-               // g2d.drawString(secondAppelLocation.getAppelSymbol(), secondAppelLocation.getAppelLocation().x, secondAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesDown) {
                 head.setBodyStart(new Point(head.getBodyStart().x, head.getBodyStart().y+1));
@@ -101,7 +99,6 @@ public class DrawingPanel extends JPanel implements KeyListener{
                     g2d.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
                 }
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
-                //g2d.drawString(secondAppelLocation.getAppelSymbol(), secondAppelLocation.getAppelLocation().x, secondAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesLeft) {
                 head.setBodyStart(new Point(head.getBodyStart().x - 1, head.getBodyStart().y));
@@ -111,7 +108,6 @@ public class DrawingPanel extends JPanel implements KeyListener{
                     g2d.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
                 }
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
-                //g2d.drawString(secondAppelLocation.getAppelSymbol(), secondAppelLocation.getAppelLocation().x, secondAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesUp) {
                 head.setBodyStart(new Point(head.getBodyStart().x, head.getBodyStart().y - 1));
@@ -121,7 +117,6 @@ public class DrawingPanel extends JPanel implements KeyListener{
                     g2d.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
                 }
                 g2d.drawString(actualAppelLocation.getAppelSymbol(),actualAppelLocation.getAppelLocation().x,actualAppelLocation.getAppelLocation().y);
-                //g2d.drawString(secondAppelLocation.getAppelSymbol(), secondAppelLocation.getAppelLocation().x, secondAppelLocation.getAppelLocation().y);
                 repaint();
             }
         }
@@ -131,8 +126,6 @@ public class DrawingPanel extends JPanel implements KeyListener{
                 actualAppelLocation.setAppelCounter(actualAppelLocation.getAppelCounter() + 1);
                 followingBodyPartsAfterApple += 50;
                 appleConsumed = !appleConsumed;
-                //secondAppelLocation = new Appel();
-                //secondAppelLocation.setAppelCounter(secondAppelLocation.getAppelCounter() + 1);
                 repaint();
             } else if (actualAppelLocation.getAppelCounter() == maxAppels) {
                 g.setColor(Color.red);
@@ -141,7 +134,7 @@ public class DrawingPanel extends JPanel implements KeyListener{
                 String gr = "Gratulation Gewonnen!:) Drücke R für Neustart";
                 g2d.setFont(new Font("",Font.PLAIN,20));
                 g2d.drawString(gr,width/2,height/2);
-                actualAppelLocation.setAppelCounter(1);
+                actualAppelLocation.setAppelCounter(0);
                 startBodyParts = 200;
                 kolisionDetect = !kolisionDetect;
                 headKolisionDetect = !headKolisionDetect;
@@ -169,7 +162,6 @@ public class DrawingPanel extends JPanel implements KeyListener{
                 movesUp = false;
                 parts = null;
             }
-            //JOptionPane.showMessageDialog(null, "Grenze erreicht!");
         }
     }
 
