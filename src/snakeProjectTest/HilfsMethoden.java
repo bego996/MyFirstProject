@@ -31,7 +31,7 @@ public class HilfsMethoden {
                         stueckBuffer[k].y = stueckBuffer[i].y;
                         stueckBuffer[l].x = stueckBuffer[j].x + stueckLaenge;
                         stueckBuffer[l].y = stueckBuffer[j].y;
-                    } else if (kopfEnde.x < kopfAnfang.x) {
+                    } else if (kopfAnfang.x > kopfEnde.x) {
                         stueckBuffer[k].x = stueckBuffer[i].x + stueckLaenge;
                         stueckBuffer[k].y = stueckBuffer[i].y;
                         stueckBuffer[l].x = stueckBuffer[j].x + stueckLaenge;
