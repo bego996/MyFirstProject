@@ -10,11 +10,11 @@ public class SnakeMother {
         this.bodyStart = xy1;
         this.bodyEnd = xy2;
     }
-     public static Point[] compileSnakeParts(SnakeMother snakeMother, int preferedLength, int preferedPartDecrement){
+     public static Point[] compileSnakeParts(SnakeMother snakeMother, int preferedLength, int preferedPartDecrement,boolean firstRun){
         Point[] head = new Point[2];
         head[0] = snakeMother.bodyStart;
         head[1] = snakeMother.bodyEnd;
-        return HilfsMethoden.schlangenStueckeBerechnenBasic(preferedPartDecrement,head[0],head[1],new Point[preferedLength]);
+        return HilfsMethoden.schlangenStueckeBerechnenBasic(preferedPartDecrement,head[0],head[1],firstRun,new Point[preferedLength]);
     }
     public static Point[] compileSnakeParts(SnakeMother snakeMother,Point[] pointToMove){
         Point[] buffer = HilfsMethoden.moveArrayPositionOnce(pointToMove);

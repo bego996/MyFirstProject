@@ -53,10 +53,10 @@ public class DrawingPanel extends JPanel implements KeyListener {
 
         if (parts == null) {
             head = new SnakeMother(new Point(width / 2, height / 2), new Point(width / 2 + 1, height / 2));
-            parts = SnakeMother.compileSnakeParts(head, startBodyParts, 1);
+            parts = SnakeMother.compileSnakeParts(head, startBodyParts, 1,true);
             actualAppelLocation.asignNewAppleLocation(parts, width, height);
         } else if (appleConsumed) {
-            partsAfterAppleComsome = SnakeMother.compileSnakeParts(new SnakeMother(parts[parts.length - 2], parts[parts.length - 1]), followingBodyPartsAfterApple, 1);
+            partsAfterAppleComsome = SnakeMother.compileSnakeParts(new SnakeMother(parts[parts.length - 2], parts[parts.length - 1]), followingBodyPartsAfterApple, 1,false);
             bothstacked.addAll(List.of(parts));
             bothstacked.addAll(List.of(partsAfterAppleComsome));
             parts = bothstacked.toArray(new Point[0]);
@@ -76,7 +76,7 @@ public class DrawingPanel extends JPanel implements KeyListener {
 
         if (stopSnake && !HilfsMethoden.isHeadConflict(head, startEndHeight, startEndWidth) && !kolisionDetect && !HilfsMethoden.isHeadConflictXY(head, possibleColissionPartsX, possibleCollisionPartsY) && !actualAppelLocation.appelInConflictWitSnakeHead(head) && !secondAppelLocation.appelInConflictWitSnakeHead(head)) {
             try {
-                Thread.sleep(1);
+                Thread.sleep(2);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
