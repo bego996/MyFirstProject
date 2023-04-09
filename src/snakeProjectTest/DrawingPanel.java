@@ -12,7 +12,7 @@ public class DrawingPanel extends JPanel implements KeyListener {
     SnakeMother head;
     Appel actualAppelLocation = new Appel();
     Appel secondAppelLocation = new Appel();
-    private int startBodyParts = 200;
+    private int startBodyParts = 100;
     private int followingBodyPartsAfterApple;
     private boolean stopSnake = false;
     private boolean kolisionDetect = false;
@@ -48,7 +48,7 @@ public class DrawingPanel extends JPanel implements KeyListener {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g.setColor(Color.GREEN);
-        g2d.setStroke(new BasicStroke(3));
+        g2d.setStroke(new BasicStroke(5));
         g2d.setFont(new Font("", Font.PLAIN, 10));
 
         if (parts == null) {
@@ -76,12 +76,12 @@ public class DrawingPanel extends JPanel implements KeyListener {
 
         if (stopSnake && !HilfsMethoden.isHeadConflict(head, startEndHeight, startEndWidth) && !kolisionDetect && !HilfsMethoden.isHeadConflictXY(head, possibleColissionPartsX, possibleCollisionPartsY) && !actualAppelLocation.appelInConflictWitSnakeHead(head) && !secondAppelLocation.appelInConflictWitSnakeHead(head)) {
             try {
-                Thread.sleep(2);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
             if (movesRight) {
-                head.setBodyStart(new Point(head.getBodyStart().x + 1, head.getBodyStart().y));
+                head.setBodyStart(new Point(head.getBodyEnd().x, head.getBodyEnd().y));
                 head.setBodyEnd(new Point(head.getBodyEnd().x + 1, head.getBodyEnd().y));
                 parts = SnakeMother.compileSnakeParts(head, parts);
                 for (int i = 0; i < parts.length - 1; i++) {
@@ -91,7 +91,7 @@ public class DrawingPanel extends JPanel implements KeyListener {
                 g2d.drawString(actualAppelLocation.getAppelSymbol(), actualAppelLocation.getAppelLocation().x, actualAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesDown) {
-                head.setBodyStart(new Point(head.getBodyStart().x, head.getBodyStart().y + 1));
+                head.setBodyStart(new Point(head.getBodyEnd().x, head.getBodyEnd().y));
                 head.setBodyEnd(new Point(head.getBodyEnd().x, head.getBodyEnd().y + 1));
                 parts = SnakeMother.compileSnakeParts(head, parts);
                 for (int i = 0; i < parts.length - 1; i++) {
@@ -101,7 +101,7 @@ public class DrawingPanel extends JPanel implements KeyListener {
                 g2d.drawString(actualAppelLocation.getAppelSymbol(), actualAppelLocation.getAppelLocation().x, actualAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesLeft) {
-                head.setBodyStart(new Point(head.getBodyStart().x - 1, head.getBodyStart().y));
+                head.setBodyStart(new Point(head.getBodyEnd().x, head.getBodyEnd().y));
                 head.setBodyEnd(new Point(head.getBodyEnd().x - 1, head.getBodyEnd().y));
                 parts = SnakeMother.compileSnakeParts(head, parts);
                 for (int i = 0; i < parts.length - 1; i++) {
@@ -111,8 +111,8 @@ public class DrawingPanel extends JPanel implements KeyListener {
                 g2d.drawString(actualAppelLocation.getAppelSymbol(), actualAppelLocation.getAppelLocation().x, actualAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesUp) {
-                head.setBodyStart(new Point(head.getBodyStart().x, head.getBodyStart().y - 1));
-                head.setBodyEnd(new Point(head.getBodyEnd().x, head.getBodyEnd().y - 1));
+                head.setBodyStart(new Point(head.getBodyEnd().x, head.getBodyEnd().y));
+                head.setBodyEnd(new Point(head.getBodyEnd().x, head.getBodyEnd().y- 1));
                 parts = SnakeMother.compileSnakeParts(head, parts);
                 for (int i = 0; i < parts.length - 1; i++) {
                     g2d.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
@@ -125,7 +125,7 @@ public class DrawingPanel extends JPanel implements KeyListener {
             if ((actualAppelLocation.appelInConflictWitSnakeHead(head) || secondAppelLocation.appelInConflictWitSnakeHead(head)) && actualAppelLocation.getAppelCounter() < maxAppels && !appleConsumed) {
                 actualAppelLocation.appelLocation = new Appel().appelLocation;
                 actualAppelLocation.setAppelCounter(actualAppelLocation.getAppelCounter() + 1);
-                followingBodyPartsAfterApple += 50;
+                followingBodyPartsAfterApple += 20;
                 appleConsumed = !appleConsumed;
                 repaint();
             } else if (actualAppelLocation.getAppelCounter() == maxAppels) {
