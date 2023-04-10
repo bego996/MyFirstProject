@@ -5,48 +5,44 @@ import java.awt.*;
 
 public class HilfsMethoden {
     public static Point[] schlangenStueckeBerechnenBasic(int stueckLaenge, Point kopfAnfang, Point kopfEnde, boolean firstRun, Point... stueckeAnfangEnde) {
-        Point[] stueckBuffer = new Point[(2 + (stueckeAnfangEnde != null ? stueckeAnfangEnde.length : 0) * 2)];
+        Point[] stueckBuffer = new Point[(firstRun ? 2 : 0) + (stueckeAnfangEnde != null ? stueckeAnfangEnde.length : 0) * 2];
         stueckBuffer[0] = kopfAnfang;
         stueckBuffer[1] = kopfEnde;
         if (firstRun) {
-            if (stueckBuffer.length > 2) {
-                for (int i = 2; i < stueckBuffer.length; i++) {
-                    stueckBuffer[i] = new Point(0, 0);
-                }
-                for (int i = 0, j = 1, k = 2, l = 3; l < stueckBuffer.length; i++, j++, k++, l++) {
-                    stueckBuffer[k].x = stueckBuffer[i].x - stueckLaenge;
-                    stueckBuffer[k].y = stueckBuffer[i].y;
-                    stueckBuffer[l].x = stueckBuffer[j].x - stueckLaenge;
-                    stueckBuffer[l].y = stueckBuffer[j].y;
-                }
+            for (int i = 2; i < stueckBuffer.length; i++) {
+                stueckBuffer[i] = new Point(0, 0);
+            }
+            for (int i = 0, j = 1, k = 2, l = 3; l < stueckBuffer.length; i++, j++, k++, l++) {
+                stueckBuffer[k].x = stueckBuffer[i].x - stueckLaenge;
+                stueckBuffer[k].y = stueckBuffer[i].y;
+                stueckBuffer[l].x = stueckBuffer[j].x - stueckLaenge;
+                stueckBuffer[l].y = stueckBuffer[j].y;
             }
         } else {
-            if (stueckBuffer.length > 2) {
-                for (int i = 2; i < stueckBuffer.length; i++) {
-                    stueckBuffer[i] = new Point(0, 0);
-                }
-                for (int i = 0, j = 1, k = 2, l = 3; l < stueckBuffer.length; i++, j++, k++, l++) {
-                    if (kopfAnfang.x < kopfEnde.x) {
-                        stueckBuffer[k].x = stueckBuffer[i].x + stueckLaenge;
-                        stueckBuffer[k].y = stueckBuffer[i].y;
-                        stueckBuffer[l].x = stueckBuffer[j].x + stueckLaenge;
-                        stueckBuffer[l].y = stueckBuffer[j].y;
-                    } else if (kopfAnfang.x > kopfEnde.x) {
-                        stueckBuffer[k].x = stueckBuffer[i].x + stueckLaenge;
-                        stueckBuffer[k].y = stueckBuffer[i].y;
-                        stueckBuffer[l].x = stueckBuffer[j].x + stueckLaenge;
-                        stueckBuffer[l].y = stueckBuffer[j].y;
-                    } else if (kopfEnde.y > kopfAnfang.y) {
-                        stueckBuffer[k].x = stueckBuffer[i].x;
-                        stueckBuffer[k].y = stueckBuffer[i].y + stueckLaenge;
-                        stueckBuffer[l].x = stueckBuffer[j].x;
-                        stueckBuffer[l].y = stueckBuffer[j].y + stueckLaenge;
-                    } else if (kopfEnde.y < kopfAnfang.y) {
-                        stueckBuffer[k].x = stueckBuffer[i].x;
-                        stueckBuffer[k].y = stueckBuffer[i].y - stueckLaenge;
-                        stueckBuffer[l].x = stueckBuffer[j].x;
-                        stueckBuffer[l].y = stueckBuffer[j].y - stueckLaenge;
-                    }
+            for (int i = 2; i < stueckBuffer.length; i++) {
+                stueckBuffer[i] = new Point(0, 0);
+            }
+            for (int i = 0, j = 1, k = 2, l = 3; l < stueckBuffer.length; i++, j++, k++, l++) {
+                if (kopfAnfang.x < kopfEnde.x) {
+                    stueckBuffer[k].x = stueckBuffer[i].x + stueckLaenge;
+                    stueckBuffer[k].y = stueckBuffer[i].y;
+                    stueckBuffer[l].x = stueckBuffer[j].x + stueckLaenge;
+                    stueckBuffer[l].y = stueckBuffer[j].y;
+                } else if (kopfAnfang.x > kopfEnde.x) {
+                    stueckBuffer[k].x = stueckBuffer[i].x + stueckLaenge;
+                    stueckBuffer[k].y = stueckBuffer[i].y;
+                    stueckBuffer[l].x = stueckBuffer[j].x + stueckLaenge;
+                    stueckBuffer[l].y = stueckBuffer[j].y;
+                } else if (kopfEnde.y > kopfAnfang.y) {
+                    stueckBuffer[k].x = stueckBuffer[i].x;
+                    stueckBuffer[k].y = stueckBuffer[i].y + stueckLaenge;
+                    stueckBuffer[l].x = stueckBuffer[j].x;
+                    stueckBuffer[l].y = stueckBuffer[j].y + stueckLaenge;
+                } else if (kopfEnde.y < kopfAnfang.y) {
+                    stueckBuffer[k].x = stueckBuffer[i].x;
+                    stueckBuffer[k].y = stueckBuffer[i].y - stueckLaenge;
+                    stueckBuffer[l].x = stueckBuffer[j].x;
+                    stueckBuffer[l].y = stueckBuffer[j].y - stueckLaenge;
                 }
             }
         }

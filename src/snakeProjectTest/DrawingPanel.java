@@ -21,7 +21,7 @@ public class DrawingPanel extends JPanel implements KeyListener {
     private boolean movesLeft = false;
     private boolean headKolisionDetect = false;
     boolean appleConsumed = false;
-    int maxAppels = 5;
+    int maxAppels = 10;
     int[] possibleColissionPartsX;
     int[] possibleCollisionPartsY;
     private final int[] startEndWidth = new int[2];
@@ -61,6 +61,7 @@ public class DrawingPanel extends JPanel implements KeyListener {
             parts = bothstacked.toArray(new Point[0]);
             appleConsumed = false;
             bothstacked = new ArrayList<>();
+            followingBodyPartsAfterApple = 0;
         }
         possibleColissionPartsX = SnakeMother.convertSnakePartsToPossibleCollisionPartsX(parts);
         possibleCollisionPartsY = SnakeMother.convertSnakePartsToPossibleCollisionPartsY(parts);
@@ -75,7 +76,7 @@ public class DrawingPanel extends JPanel implements KeyListener {
 
         if (stopSnake && !HilfsMethoden.isHeadConflict(head, startEndHeight, startEndWidth) && !kolisionDetect && !HilfsMethoden.isHeadConflictXY(head, possibleColissionPartsX, possibleCollisionPartsY) && !actualAppelLocation.appelInConflictWitSnakeHead(head)) {
             try {
-                Thread.sleep(30);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -124,7 +125,7 @@ public class DrawingPanel extends JPanel implements KeyListener {
             if (actualAppelLocation.appelInConflictWitSnakeHead(head) && actualAppelLocation.getAppelCounter() < maxAppels && !appleConsumed) {
                 actualAppelLocation.appelLocation = new Appel().appelLocation;
                 actualAppelLocation.setAppelCounter(actualAppelLocation.getAppelCounter() + 1);
-                followingBodyPartsAfterApple += 4;
+                followingBodyPartsAfterApple += 10;
                 appleConsumed = !appleConsumed;
                 repaint();
             } else if (actualAppelLocation.getAppelCounter() == maxAppels) {
