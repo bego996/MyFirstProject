@@ -91,8 +91,8 @@ public class DrawingPanel extends JPanel implements KeyListener {
                 g2d.drawString(actualAppelLocation.getAppelSymbol(), actualAppelLocation.getAppelLocation().x, actualAppelLocation.getAppelLocation().y);
                 repaint();
             } else if (movesDown) {
-                head.setBodyStart(new Point(head.getBodyEnd().x, head.getBodyEnd().y));
-                head.setBodyEnd(new Point(head.getBodyEnd().x, head.getBodyEnd().y + 2));
+                head.setBodyStart(new Point(head.getBodyEnd().x, head.getBodyEnd().y+1));
+                head.setBodyEnd(new Point(head.getBodyStart().x, head.getBodyStart().y+1 ));
                 parts = SnakeMother.compileSnakeParts(head, parts);
                 for (int i = 0; i < parts.length - 1; i++) {
                     g2d.drawLine(parts[i].x, parts[i].y, parts[i + 1].x, parts[i + 1].y);
