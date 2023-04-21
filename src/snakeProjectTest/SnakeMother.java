@@ -11,6 +11,7 @@ public class SnakeMother {
         this.bodyEnd = xy2;
     }
 
+
     public static Point[] compileSnakeParts(SnakeMother snakeMother, int preferedLength, int preferedPartDecrement, boolean firstRun) {
         Point[] head = new Point[2];
         head[0] = snakeMother.bodyStart;
